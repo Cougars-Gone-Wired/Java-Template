@@ -8,9 +8,12 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 // anyway phoenix imports were here in the original
 
 public class Shooter {
-    // FPID ramps up motor speeds over time
-    // the fancy math terms basically mean it calculates how to get
-    // from the current speed to the desired speed
+    /*
+    There are two "ShooterModes":
+        PID (proportional integral derivative) changes speed over time
+        VOLTAGE gives a straight voltage amount to the motors.
+    */
+
     public static double F = 0.045; // constant added
     public static double P = 0.6 // proportional (fraction multiplied)
     public static double I = 0.0001; // integral (area under the curve)
