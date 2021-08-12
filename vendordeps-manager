@@ -1,0 +1,95 @@
+#!/bin/bash
+
+#packages=(navx phoenix wpilibcommands2 wpilibcommands revcolorv3 pixy2java) 
+
+#checkforpackage() {
+#	for package in $packages; do
+#		if [ $1 == $package ]; then
+#			return 0
+#		else
+#			return 1
+#		fi
+#	done
+#}
+
+
+vendordepsdir="./vendordeps"
+wpilibdir="$HOME/wpilib"
+
+if [ -d $wpilibdir ]; then
+	PATH="$HOME/wpilib/2021/jdk/bin":$PATH
+else
+	echo "WARNING: wpilib directory was not found in home! Make sure a valid Java binary is in your PATH!"
+fi
+
+if [ ! -d $vendordepsdir ]; then
+	mkdir $vendordepsdir
+fi
+
+echo
+
+command=$1
+shift
+args=$@
+
+if [ $command == install ]; then
+	for arg in $args; do
+		case $arg in
+			
+			navx)
+				echo "Installing navx_frc dependency"
+				echo
+				curl -o $vendordepsdir/navx_frc.json https://www.kauailabs.com/dist/frc/2021/navx_frc.json
+				echo
+				;;
+			
+			phoenix)
+				echo "Installing CTRE Phoenix dependency"
+				echo
+				curl -o $vendordepsdir/Phoenix.json http://devsite.ctr-electronics.com/maven/release/com/ctre/phoenix/Phoenix-latest.json
+				echo
+				;;
+			
+			pixy2java)
+				echo "Installing Pixy2JavaAPI dependency in mode build.gradle"
+				echo "Appending the following to ./build.gradle"
+				echo
+				echo "
+//Pixy2JavaAPI dependency (https://github.com/PseudoResonance/Pixy2JavaAPI)
+repositories {
+    maven { url 'https://nexus.otake.pw/repository/maven-public/' }
+}
+dependencies {
+	implementation 'pw.otake.pseudoresonance:pixy2-java-api:1.4.1'
+}
+" | tee -a ./build.gradle
+				echo
+				;;
+				
+			wpilibcommands)
+				echo "Enabling WPILib old commands"
+				echo
+				curl -o $vendordepsdir/WPILibOldCommands.json https://raw.githubusercontent.com/wpilibsuite/allwpilib/main/wpilibOldCommands/WPILibOldCommands.json
+				echo
+				;;
+				
+			wpilibcommands2)
+				echo "Enabling WPILib new commands"
+				echo
+				curl -o $vendordepsdir/WPILibNewCommands.json https://raw.githubusercontent.com/wpilibsuite/allwpilib/main/wpilibNewCommands/WPILibNewCommands.json
+				echo
+				;;
+				
+		esac
+	done
+	
+	echo "Pre-downloading dependencies using gradlew"
+	echo
+	./gradlew downloadAll
+	echo
+	
+	echo "Successfully installed all dependencies!"
+fi
+
+echo	
+		
