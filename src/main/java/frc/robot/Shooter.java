@@ -12,7 +12,7 @@ public class Shooter {
     // the fancy math terms basically mean it calculates how to get
     // from the current speed to the desired speed
     public static double F = 0.045; // constant added
-    public static double P = .6 // proportional (fraction multiplied)
+    public static double P = 0.6 // proportional (fraction multiplied)
     public static double I = 0.0001; // integral (area under the curve)
     public static double D = 10; // derivative (slope of the curve)
 }
