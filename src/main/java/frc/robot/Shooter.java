@@ -2,7 +2,7 @@ package frc.robot;
 
 // Phoenix is used to control and configure the Falcon 500 motor(s)
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-// https://www.ctr-electronics.com/downloads/api/java/html/enumcom_1_1ctre_1_1phoenix_1_1motorcontrol_1_1_control_mode.html
+// control modes specify velocity profiles, motion profiling?
 import com.ctre.phoenix.motorcontrol.ControlMode;
 // for letting the shooter motor coast instead of brake in neutral mode
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -48,4 +48,39 @@ public class Shooter {
     // how close we have to be to the real value (acceptable error) when on voltage
     public static double VOLTAGE_VELOCITY_THRESHOLD = 130;
 
+    private WPI_TalonFX shooterMotor;
+    private TalonFXSensorCollection sensors;
+
+    private double shooterSpeed;
+    private double desiredVelocity;
+
+    public Shooter() {
+        shooterMotor = new WPI_TalonFX(Constants.ShooterConstants.SHOOTER_MOTOR_ID);
+        sensors = new TalonFXSensorCollection(shooterMotor);
+        initialize();
+    }
+
+    public void initialize() {
+        // change motor spin direction (may be removed depending on the robot)
+        shooterMotor.setInverted(true);
+        // coast (as opposed to brake) when not giving voltage to the motor
+        shooterMotor.setNeutralMode(NeutralMode.Coast);
+
+        // set up PID
+        // args for these functions are: slot, value, timeout in ms
+        shooterMotor.config_kF(0, F, 10);
+        shooterMotor.config_kP(0, P, 10);
+        shooterMotor.config_kI(0, I, 10);
+        shooterMotor.config_IntegralZone(0, IZONE, 10);
+        shooterMotor.config_kD(0, D, 10);
+        
+        setNotMoving();
+        shooterSpeed = INITIAL_SHOOTER_SPEED;
+        desiredVelocity = INITIAL_DESIRED_VELOCITY;
+    }
+
+    public void setNotMoving() {
+        shooterMotor.set(0);
+        currentShooterState = ShooterStates.NOT_MOVING;
+    }
 }
