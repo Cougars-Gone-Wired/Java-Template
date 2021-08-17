@@ -15,10 +15,10 @@ public class Shooter {
     */
 
     // PID constants
-    public static double F = 0.045; // constant added
-    public static double P = 0.6 // proportional (fraction multiplied)
+    public static double F = 0.045;  // constant added
+    public static double P = 0.6;    // proportional (fraction multiplied)
     public static double I = 0.0001; // integral (area under the curve)
-    public static double D = 10; // derivative (slope of the curve)
+    public static double D = 10;     // derivative (slope of the curve)
 
     // Voltage constants
     public static double VOLTAGE_TO_VELOCITY = 20480; // need to figure out units
