@@ -1,7 +1,14 @@
 package frc.robot;
 
-// import phoenix to control motors
+// Phoenix is used to control and configure the Falcon 500 motor(s)
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+// https://www.ctr-electronics.com/downloads/api/java/html/enumcom_1_1ctre_1_1phoenix_1_1motorcontrol_1_1_control_mode.html
+import com.ctre.phoenix.motorcontrol.ControlMode;
+// for letting the shooter motor coast instead of brake in neutral mode
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+// manage sensors
+import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
+
 
 // I assume the phoenix stuff has to do with the motors involved in the shooter?
 // import com.ctre.phoenix.motorcontrol.ControlMode;
