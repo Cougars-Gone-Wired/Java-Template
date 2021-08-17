@@ -9,11 +9,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 // manage sensors
 import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 
-
-// I assume the phoenix stuff has to do with the motors involved in the shooter?
-// import com.ctre.phoenix.motorcontrol.ControlMode;
-// anyway phoenix imports were here in the original
-
 public class Shooter {
     // how fast the shooter motor spins (0 to 1)
     public static double INITIAL_SHOOTER_SPEED = 1.00;
