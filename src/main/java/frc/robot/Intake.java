@@ -10,7 +10,7 @@ public class Intake {
     private WPI_TalonSRX intakeMotor;
 
     public Intake() {
-        intakeMotor = new WPI_TalonSRX(Constants.INTAKE_MOTOR_ID);
+        intakeMotor = new WPI_TalonSRX(Constants.IntakeConstants.INTAKE_MOTOR_ID);
         initialize();
     }
 
@@ -28,11 +28,11 @@ public class Intake {
 
         switch (currentIntakeState) {
             case NOT_MOVING:
-                if (intakeAxis >= Constants.DEADZONE
+                if (intakeAxis >= Constants.IntakeConstants.DEADZONE
                         && Robot.arms.isArmShootingPosition() 
                         && !Robot.arms.isArmClimbingPosition()) {
                     setIntaking();
-                } else if (intakeAxis <= -Constants.DEADZONE 
+                } else if (intakeAxis <= -Constants.IntakeConstants.DEADZONE 
                         && !Robot.arms.isIntakeUpPositon() 
                         && Robot.arms.isArmShootingPosition() && 
                         !Robot.arms.isArmClimbingPosition()) {
@@ -46,7 +46,7 @@ public class Intake {
                 } else {
                     setIntaking();
                 }
-                if (intakeAxis < Constants.DEADZONE  
+                if (intakeAxis < Constants.IntakeConstants.DEADZONE  
                         || !Robot.arms.isArmShootingPosition()
                         || Robot.arms.isArmClimbingPosition()) {
                     setNotMoving();
@@ -54,7 +54,7 @@ public class Intake {
                 break;
 
             case OUTTAKING:
-                if (intakeAxis > -Constants.DEADZONE 
+                if (intakeAxis > -Constants.IntakeConstants.DEADZONE 
                         || Robot.arms.isIntakeUpPositon() 
                         || !Robot.arms.isArmShootingPosition()
                         || Robot.arms.isArmClimbingPosition()) {
