@@ -15,4 +15,11 @@ public class Constants {
         
         public static final double DEADZONE = 0.15; // Last year's value was 0.15
     }
+
+    // Climber constants here
+    public class ClimberConstants{
+        public static final double DEADZONE = 0.15;
+        public static final int CLIMBER_LEFT_MOTOR_ID = 1;
+        public static final int CLIMBER_RIGHT_MOTOR_ID = 2; 
+    }
 }
