@@ -15,6 +15,12 @@ public class Constants {
         
     }
 
+    // Intake constants here
+    public class IntakeConstants {
+        public static final double DEADZONE = 0.15;
+        public static final int INTAKE_MOTOR_ID = 1;
+    }
+
     // Climber constants here
     public class ClimberConstants{
         public static final double DEADZONE = 0.15;
