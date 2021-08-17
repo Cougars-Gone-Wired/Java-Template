@@ -13,6 +13,7 @@ public class Constants {
         public static final int RIGHT_MIDDLE_MOTOR_ID = 5;
         public static final int RIGHT_REAR_MOTOR_ID = 6;
         
+        public static final double DEADZONE = 0.15; // Last year's value was 0.15
     }
 
     // Intake constants here
