@@ -10,8 +10,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 
 public class Shooter {
-    // how fast the shooter motor spins (0 to 1)
-    public static double INITIAL_SHOOTER_SPEED = 1.00;
+    public static double INITIAL_SHOOTER_SPEED = 1.00; // -1 to 1
 
     /*
     There are two "ShooterModes":
