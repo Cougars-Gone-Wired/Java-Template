@@ -40,7 +40,8 @@ public class Shooter {
     public static double PID_VELOCITY_THRESHOLD = 70;
 
     // Voltage constants
-    public static double VOLTAGE_TO_VELOCITY = 20480; // need to figure out units
+    // need to figure out units
+    public static double VOLTAGE_TO_VELOCITY = 20480;
     public static double INITIAL_DESIRED_VELOCITY = INITIAL_SHOOTER_SPEED * VOLTAGE_TO_VELOCITY;
     // how fast we have to be going to start motors when on voltage
     public static double VOLTAGE_INITIAL_VELOCITY_THRESHOLD = 5;
