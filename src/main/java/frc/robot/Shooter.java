@@ -31,7 +31,9 @@ public class Shooter {
     public static double F = 0.045;  // constant added
     public static double P = 0.6;    // proportional (fraction multiplied)
     public static double I = 0.0001; // integral (area under the curve)
+    public static int IZONE = 1400;  // related to PID but I don't know how yet
     public static double D = 10;     // derivative (slope of the curve)
+
     // how fast we have to be going to start motors when on PID
     public static double PID_INITIAL_VELOCITY_THRESHOLD = 5;
     // how close we have to be to the real value (acceptable error) when on PID
