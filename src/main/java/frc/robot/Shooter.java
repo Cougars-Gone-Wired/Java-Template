@@ -11,7 +11,7 @@ public class Shooter {
     /*
     There are two "ShooterModes":
         PID (proportional integral derivative) changes speed over time
-        VOLTAGE gives a straight voltage amount to the motors.
+        VOLTAGE gives a straight voltage amount to the motors (dead reckoning)
     */
 
     // PID constants
