@@ -17,6 +17,15 @@ public class Shooter {
         PID (proportional integral derivative) changes speed over time
         VOLTAGE gives a straight voltage amount to the motors (dead reckoning)
     */
+    public enum ShooterModes {
+        VOLTAGE, PID
+    }
+    ShooterModes currentShooterMode;
+
+    public enum ShooterStates {
+        NOT_MOVING, SHOOTING
+    }
+    private ShooterStates currentShooterState; // not sure why this is private
 
     // PID constants
     public static double F = 0.045;  // constant added
