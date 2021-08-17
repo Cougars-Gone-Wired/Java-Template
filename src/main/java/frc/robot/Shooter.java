@@ -15,6 +15,9 @@ import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 // anyway phoenix imports were here in the original
 
 public class Shooter {
+    // how fast the shooter motor spins (0 to 1)
+    public static double INITIAL_SHOOTER_SPEED = 1.00;
+
     /*
     There are two "ShooterModes":
         PID (proportional integral derivative) changes speed over time
@@ -26,12 +29,17 @@ public class Shooter {
     public static double P = 0.6;    // proportional (fraction multiplied)
     public static double I = 0.0001; // integral (area under the curve)
     public static double D = 10;     // derivative (slope of the curve)
+    // how fast we have to be going to start motors when on PID
+    public static double PID_INITIAL_VELOCITY_THRESHOLD = 5;
+    // how close we have to be to the real value (acceptable error) when on PID
+    public static double PID_VELOCITY_THRESHOLD = 70;
 
     // Voltage constants
     public static double VOLTAGE_TO_VELOCITY = 20480; // need to figure out units
     public static double INITIAL_DESIRED_VELOCITY = INITIAL_SHOOTER_SPEED * VOLTAGE_TO_VELOCITY;
-    public static double VOLTAGE_INITIAL_VELOCITY_THRESHOLD = 5;//250
-    public static double PID_INITIAL_VELOCITY_THRESHOLD = 5;
-    public static double VOLTAGE_VELOCITY_THRESHOLD = 130;//50
-    public static double PID_VELOCITY_THRESHOLD = 70;
+    // how fast we have to be going to start motors when on voltage
+    public static double VOLTAGE_INITIAL_VELOCITY_THRESHOLD = 5;
+    // how close we have to be to the real value (acceptable error) when on voltage
+    public static double VOLTAGE_VELOCITY_THRESHOLD = 130;
+
 }
