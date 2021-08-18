@@ -2,7 +2,7 @@ package frc.robot;
 
 // Phoenix is used to control and configure the Falcon 500 motor(s)
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-// control modes specify velocity profiles, motion profiling?
+// PercentOutput/Current/Velocity/Position/Follower
 import com.ctre.phoenix.motorcontrol.ControlMode;
 // for letting the shooter motor coast instead of brake in neutral mode
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -40,8 +40,7 @@ public class Shooter {
     public static double PID_VELOCITY_THRESHOLD = 70;
 
     // Voltage constants
-    // need to figure out units
-    public static double VOLTAGE_TO_VELOCITY = 20480;
+    public static double VOLTAGE_TO_VELOCITY = 20480; // position change per 100 ms
     public static double INITIAL_DESIRED_VELOCITY = INITIAL_SHOOTER_SPEED * VOLTAGE_TO_VELOCITY;
     // how fast we have to be going to start motors when on voltage
     public static double VOLTAGE_INITIAL_VELOCITY_THRESHOLD = 5;
@@ -53,6 +52,7 @@ public class Shooter {
 
     private double shooterSpeed;
     private double desiredVelocity;
+
 
     public Shooter() {
         shooterMotor = new WPI_TalonFX(Constants.ShooterConstants.SHOOTER_MOTOR_ID);
@@ -75,6 +75,7 @@ public class Shooter {
         shooterMotor.config_kD(0, D, 10);
         
         setNotMoving();
+
         shooterSpeed = INITIAL_SHOOTER_SPEED;
         desiredVelocity = INITIAL_DESIRED_VELOCITY;
     }
