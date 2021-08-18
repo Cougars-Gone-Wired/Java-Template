@@ -21,4 +21,9 @@ public class Constants {
         public static final int CLIMBER_LEFT_MOTOR_ID = 1;
         public static final int CLIMBER_RIGHT_MOTOR_ID = 2; 
     }
+
+    // Shooter constants here
+    public class ShooterConstants{
+        public static final int SHOOTER_MOTOR_ID = 1;
+    }
 }
