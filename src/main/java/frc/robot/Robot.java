@@ -14,8 +14,12 @@ import edu.wpi.first.wpilibj.TimedRobot;
  */
 public class Robot extends TimedRobot {
     
+    public static Controllers controllers;
 
+    public static Drive drive;
     public static Arms arms;
+    public static Intake intake;
+    public static Climber climber;
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -23,9 +27,12 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        
+        controllers = new Controllers();
 
+        drive = new Drive();
         arms = new Arms();
+        intake = new Intake();
+        climber = new Climber();
 
     }
 
@@ -54,9 +61,12 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         
-        
+        setMotorsBrake();
 
+        drive.initalize();
         arms.initialize();
+        intake.initialize();
+        climber.initalize();
 
     }
 
@@ -69,23 +79,34 @@ public class Robot extends TimedRobot {
     /** This function is called once when teleop is enabled. */
     @Override
     public void teleopInit() {
-            
-        
 
+        setMotorsBrake();
+
+        drive.initalize();
         arms.initialize();
+        intake.initialize();
+        climber.initalize();
 
     }
 
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
+        controllers.updateControllerValues();
 
+        arms.controlArm(controllers.isArmUpBumper(), controllers.isArmDownBumper());
+        climber.climberControls(controllers.getClimberUpTrigger(), controllers.getClimberDownTrigger());
+        drive.robotDrive(controllers.getDriveSpeedAxis(), controllers.getDriveTurnAxis(), controllers.isDriveSideToggle());
+
+        arms.controlIntakeArm(controllers.isIntakeArmDownBumper(), controllers.isIntakeArmUpBumper());
+        intake.controlIntake(controllers.getIntakeAxis());
     }
 
     /** This function is called once when the robot is disabled. */
     @Override
     public void disabledInit() {
 
+        setMotorsCoast();
     }
 
     /** This function is called periodically when disabled. */
@@ -104,5 +125,21 @@ public class Robot extends TimedRobot {
     @Override
     public void testPeriodic() {
 
+
+    }
+
+
+    public void setMotorsBrake() {
+        climber.setMotorsBrake();
+        drive.setMotorsBrake();
+        intake.setMotorsBrake();
+        // feeder.setMotorsBrake();
+    }
+
+    public void setMotorsCoast() {
+        climber.setMotorsCoast();
+        drive.setMotorsCoast();
+        intake.setMotorsCoast();
+        // feeder.setMotorsCoast();
     }
 }

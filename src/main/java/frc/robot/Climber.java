@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.SpeedControllerGroup; //Allows for multiple SpeedController objects to be linked together.
 import edu.wpi.first.wpilibj.Timer;
 
-import frc.robot.Constants.ClimberConstants;
+// import frc.robot.Constants.ClimberConstants;
 
 public class Climber {
 
@@ -49,15 +49,15 @@ public class Climber {
 
         switch (currentClimberState) {
             case TOP:
-                if (climberUpTriggerBool && !climberDownTriggerBool) {
+                if (climberUpTriggerBool && !climberDownTriggerBool && Robot.arms.isArmClimbingPosition()) {
                     setMovingUp();
-                }else if (!climberUpTriggerBool && climberDownTriggerBool) {
+                }else if (!climberUpTriggerBool && climberDownTriggerBool && Robot.arms.isArmClimbingPosition()) {
                     setMovingDown();
                 }
                 break;
 
             case NOT_MOVING:
-                if (climberUpTriggerBool && !climberDownTriggerBool) {
+                if (climberUpTriggerBool && !climberDownTriggerBool && Robot.arms.isArmClimbingPosition()) {
                     setMovingUp();
                 }
                 break;
