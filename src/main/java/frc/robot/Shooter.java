@@ -42,6 +42,7 @@ public class Shooter {
     // Voltage constants
     public static double VOLTAGE_TO_VELOCITY = 20480; // position change per 100 ms
     public static double INITIAL_DESIRED_VELOCITY = INITIAL_SHOOTER_SPEED * VOLTAGE_TO_VELOCITY;
+
     // how fast we have to be going to start motors when on voltage
     public static double VOLTAGE_INITIAL_VELOCITY_THRESHOLD = 5;
     // how close we have to be to the real value (acceptable error) when on voltage
@@ -53,6 +54,10 @@ public class Shooter {
     private double shooterSpeed;
     private double desiredVelocity;
 
+    // used to calculate if the (initial) desired velocity has been reached
+    private double initialVelocityThreshold;
+    private double velocityThreshold;
+
 
     public Shooter() {
         shooterMotor = new WPI_TalonFX(Constants.ShooterConstants.SHOOTER_MOTOR_ID);
@@ -61,6 +66,9 @@ public class Shooter {
     }
 
     public void initialize() {
+        // start in voltage mode
+        setVoltage();
+
         // change motor spin direction (may be removed depending on the robot)
         shooterMotor.setInverted(true);
         // coast (as opposed to brake) when not giving voltage to the motor
@@ -80,8 +88,25 @@ public class Shooter {
         desiredVelocity = INITIAL_DESIRED_VELOCITY;
     }
 
+    // change to voltage mode
+    public void setVoltage() {
+        setVelocityThresholds(VOLTAGE_INITIAL_VELOCITY_THRESHOLD, VOLTAGE_VELOCITY_THRESHOLD);
+        currentShooterMode = ShooterModes.VOLTAGE;
+    }
+
+    // change to PID mode
+    public void setPID() {
+        setVelocityThresholds(PID_INITIAL_VELOCITY_THRESHOLD, PID_VELOCITY_THRESHOLD);
+        currentShooterMode = ShooterModes.PID;
+    }
+
     public void setNotMoving() {
         shooterMotor.set(0);
         currentShooterState = ShooterStates.NOT_MOVING;
+    }
+
+    public void setVelocityThresholds(double initialVelocityThreshold, double velocityThreshold) {
+        this.initialVelocityThreshold = initialVelocityThreshold;
+        this.velocityThreshold = velocityThreshold;
     }
 }
