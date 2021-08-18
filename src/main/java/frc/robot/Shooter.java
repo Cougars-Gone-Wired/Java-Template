@@ -51,12 +51,17 @@ public class Shooter {
     private WPI_TalonFX shooterMotor;
     private TalonFXSensorCollection sensors;
 
+    private boolean shooterTriggerBool;
+
     private double shooterSpeed;
     private double desiredVelocity;
 
     // used to calculate if the (initial) desired velocity has been reached
     private double initialVelocityThreshold;
     private double velocityThreshold;
+
+    private double velocity;
+    private double error;
 
 
     public Shooter() {
@@ -108,5 +113,70 @@ public class Shooter {
     public void setVelocityThresholds(double initialVelocityThreshold, double velocityThreshold) {
         this.initialVelocityThreshold = initialVelocityThreshold;
         this.velocityThreshold = velocityThreshold;
+    }
+
+    public void controlShooter(double shooterTrigger, boolean shooterToggle) {
+        updateVelocity();
+        checkIfShooting(shooterTrigger);
+
+        // switch mode if appropriate
+        if (shooterToggle) {
+            switch (currentShooterMode) {
+                case VOLTAGE:
+                    setPID();
+                    break;
+                case PID:
+                    setVoltage();
+                    break;
+            }
+        }
+    }
+
+    public void checkIfShooting(double shooterTrigger) {
+        shooterTriggerBool = (shooterTrigger >= Constants.ShooterConstants.DEADZONE);
+
+        switch (currentShooterState) {
+            case NOT_MOVING:
+                if (shooterTriggerBool 
+                        && !Robot.arms.isArmClimbingPosition()
+                        && !Robot.intake.isIntaking()) {
+                    switch (currentShooterMode) {
+                        case VOLTAGE:
+                            setVoltageShooting();
+                            break;
+                        case PID:
+                            setPIDShooting();
+                            break;
+                    }
+                }
+                break;
+
+            case SHOOTING:
+                if (currentShooterMode == ShooterModes.VOLTAGE) {
+                    setPIDShooting();
+                }
+                if (!shooterTriggerBool 
+                        || Robot.arms.isArmClimbingPosition()
+                        || Robot.intake.isIntaking()) {
+                    setNotMoving();
+                } 
+                break;
+        }
+    }
+
+    public void setVoltageShooting() {
+        updateVelocity();
+        shooterMotor.set(shooterSpeed);
+        currentShooterState = ShooterStates.SHOOTING;
+    }
+
+    public void setPIDShooting() {
+        shooterMotor.set(ControlMode.Velocity, desiredVelocity);
+        currentShooterState = ShooterStates.SHOOTING;
+    }
+
+    public void updateVelocity() {
+        velocity = -sensors.getIntegratedSensorVelocity();
+        error = desiredVelocity - velocity;
     }
 }
