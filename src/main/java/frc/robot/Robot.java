@@ -92,7 +92,14 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
+        controllers.updateControllerValues();
 
+        arms.controlArm(controllers.isArmUpBumper(), controllers.isArmDownBumper());
+        climber.climberControls(controllers.getClimberUpTrigger(), controllers.getClimberDownTrigger());
+        drive.robotDrive(controllers.getDriveSpeedAxis(), controllers.getDriveTurnAxis(), controllers.isDriveSideToggle());
+
+        arms.controlIntakeArm(controllers.isIntakeArmDownBumper(), controllers.isIntakeArmUpBumper());
+        intake.controlIntake(controllers.getIntakeAxis());
     }
 
     /** This function is called once when the robot is disabled. */
@@ -117,6 +124,7 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during test mode. */
     @Override
     public void testPeriodic() {
+
 
     }
 
